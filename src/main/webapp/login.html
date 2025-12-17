@@ -3,7 +3,8 @@
 <head>
     <title>PetroMax | Login & Registration</title>
 
-   
+    <meta charset="UTF-8">
+
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
 
     <style>
@@ -115,10 +116,6 @@
 
             document.getElementById(type + "Btn").classList.add("active");
         }
-
-        function onlyNumbers(input) {
-            input.value = input.value.replace(/[^0-9]/g, '');
-        }
     </script>
 </head>
 
@@ -129,13 +126,12 @@
     <h1>PetroMax</h1>
     <div class="subtitle">On-Demand Fuel Delivery</div>
 
-   
     <div class="toggle-buttons">
         <button id="loginBtn" class="active" onclick="showForm('login')">Login</button>
         <button id="registerBtn" onclick="showForm('register')">New User</button>
     </div>
 
-   
+    <!-- LOGIN -->
     <form id="loginForm" class="form-box active" action="login" method="post">
 
         <label>Username</label>
@@ -147,7 +143,7 @@
         <button class="submit-btn">Login</button>
     </form>
 
-  
+    <!-- REGISTER -->
     <form id="registerForm" class="form-box" action="register" method="post">
 
         <label>Username</label>
@@ -161,17 +157,6 @@
 
         <label>Vehicle Number</label>
         <input type="text" name="vehicleNo" required>
-
-        <label>Mobile Number</label>
-        <input
-            type="text"
-            name="mobile"
-            maxlength="10"
-            pattern="[0-9]{10}"
-            title="Enter exactly 10 digits"
-            required
-            oninput="onlyNumbers(this)"
-        >
 
         <button class="submit-btn">Register</button>
     </form>
