@@ -1,14 +1,25 @@
-# 1. Use official Tomcat with Java 17
+# ---------- STAGE 1: Build WAR ----------
+FROM maven:3.9.6-eclipse-temurin-17 AS builder
+
+WORKDIR /app
+
+# Copy pom and source code
+COPY pom.xml .
+COPY src ./src
+
+# Build the WAR
+RUN mvn clean package -DskipTests
+
+# ---------- STAGE 2: Run on Tomcat ----------
 FROM tomcat:10.1-jdk17
 
-# 2. Remove default Tomcat apps
+# Remove default apps
 RUN rm -rf /usr/local/tomcat/webapps/*
 
-# 3. Copy your WAR file into Tomcat
-COPY target/PetroMax-1.0.war /usr/local/tomcat/webapps/ROOT.war
+# Copy WAR from builder stage
+COPY --from=builder /app/target/PetroMax-1.0.war \
+    /usr/local/tomcat/webapps/ROOT.war
 
-# 4. Expose Tomcat port
 EXPOSE 8080
 
-# 5. Start Tomcat
 CMD ["catalina.sh", "run"]
